@@ -8,7 +8,7 @@ jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Checkout Code
       uses: actions/checkout@v2
 
     - name: Setup FFmpeg
@@ -16,9 +16,8 @@ jobs:
 
     - name: Download Video
       run: |
-        curl -L -o video.mp4 "https://docs.google.com/uc?export=download&id=1_dUiwEfnUkFgS93..."
+        curl -L -o video.mp4 "https://docs.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk"
 
     - name: Start Live
       run: |
-        ffmpeg -re -stream_loop -1 -i video.mp4 -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/v8zq-jq22-6wd2-h6qt-actz
-        
+        ffmpeg -re -stream_loop -1 -i video.mp4 -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/v8zq-jq22-6wd2-h6qt-actz"
