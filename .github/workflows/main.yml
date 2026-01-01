@@ -12,7 +12,7 @@ jobs:
     - name: Download Large Video
       run: |
         curl -sc /tmp/cookie "https://docs.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" > /dev/null
-        CONFIRM=$(grep -o 'confirm=[^&]*' /tmp/cookie | sed 's/confirm=//')
+        CONFIRM=$(grep -o 'confirm=[^&]*' /tmp/cookie | sed 's/confirm=//' || echo "")
         curl -Lb /tmp/cookie "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" -o video.mp4
 
     - name: Start Live
