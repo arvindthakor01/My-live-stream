@@ -1,20 +1,14 @@
-name: 24/7 Live Stream
+name: Live
 on:
   workflow_dispatch:
-
 jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-    - name: Setup FFmpeg
-      run: sudo apt update && sudo apt install ffmpeg -y
-
-    - name: Download Large Video
+    - name: Start
       run: |
+        sudo apt update && sudo apt install ffmpeg -y
         curl -sc /tmp/cookie "https://docs.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" > /dev/null
         CONFIRM=$(grep -o 'confirm=[^&]*' /tmp/cookie | sed 's/confirm=//' || echo "")
         curl -Lb /tmp/cookie "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" -o video.mp4
-
-    - name: Start Live
-      run: |
         ffmpeg -re -stream_loop -1 -i video.mp4 -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/v8zq-jq22-6wd2-h6qt-actz"
