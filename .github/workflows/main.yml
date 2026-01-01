@@ -7,13 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install FFmpeg
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg curl
 
-      - name: Start Streaming
+      - name: Stream with Bypass
         run: |
-          ffmpeg -re -i "https://drive.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" \
-          -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
+          # Is line se hum Google Drive ka direct download link nikaalte hain
+          FILE_ID="1_dUtewEfnUkFg593N86N4yayCoYbzZIk"
+          CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p')
+          DIRECT_URL="https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
+          
+          # Ab FFmpeg is direct link ko stream karega
+          ffmpeg -re -i "$DIRECT_URL" \
+          -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
           -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k \
           -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
