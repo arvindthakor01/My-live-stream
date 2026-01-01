@@ -1,4 +1,4 @@
-name: 24/7 Live Stream
+name: Live Stream From Drive
 on:
   workflow_dispatch:
 
@@ -6,13 +6,14 @@ jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-    - name: Setup FFmpeg
-      run: sudo apt update && sudo apt install ffmpeg -y
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
 
-    - name: Download Video
-      run: |
-        wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk' -O video.mp4
-
-    - name: Start Live
-      run: |
-        ffmpeg -re -stream_loop -1 -i video.mp4 -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/v8zq-jq22-6wd2-h6qt-actz"
+      - name: Start Streaming
+        run: |
+          ffmpeg -re -i "https://drive.google.com/uc?export=download&id=1_dUtewEfnUkFg593N86N4yayCoYbzZIk" \
+          -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
+          -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k \
+          -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
