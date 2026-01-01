@@ -1,4 +1,4 @@
-name: Live Stream From Drive
+name: Live Stream Final
 on:
   workflow_dispatch:
 
@@ -7,17 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg curl
-
-      - name: Stream with Bypass
         run: |
-          # Is line se hum Google Drive ka direct download link nikaalte hain
-          FILE_ID="1_dUtewEfnUkFg593N86N4yayCoYbzZIk"
-          CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p')
-          DIRECT_URL="https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
-          
-          # Ab FFmpeg is direct link ko stream karega
-          ffmpeg -re -i "$DIRECT_URL" \
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Start Streaming
+        run: |
+          ffmpeg -re -i "https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20251231-1_720p_30f_20260101_004124.mp4" \
           -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
           -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k \
           -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
