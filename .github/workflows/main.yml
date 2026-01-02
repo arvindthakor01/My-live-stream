@@ -1,4 +1,5 @@
-name: Live Stream Final
+name: 6 Hours Live Loop Stream
+
 on:
   workflow_dispatch:
 
@@ -7,13 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install FFmpeg
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Start Streaming
+      - name: Start 6 Hour Loop Stream
         run: |
-          ffmpeg -re -i "https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20251231-1_720p_30f_20260101_004124.mp4" \
-          -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
-          -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k \
+          ffmpeg -re -stream_loop -1 -t 21600 -i "https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260101_720p_30f_20260102_013624.mp4" \
+          -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
+          -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -ar 44100 \
           -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
