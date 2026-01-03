@@ -1,4 +1,4 @@
-name: Live Stream From GitHub Link
+Name: Live Stream From GitHub Link
 on:
   workflow_dispatch:
 
@@ -11,11 +11,11 @@ jobs:
 
       - name: Stream to YouTube
         run: |
-          # Aapka naya direct video link
+          # Aapka video link
           VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260102_720p_30f_20260103_055801.mp4"
           
-          # -stream_loop -1 video ko baar baar repeat karega
+          # Nayi Stream Key ke saath FFmpeg command
           ffmpeg -re -stream_loop -1 -i "$VIDEO_URL" \
           -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
           -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -ar 44100 \
-          -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
+          -f flv "rtmp://a.rtmp.youtube.com/live2/R4q6-qczk-kjrp-aw7u-bjfr"
