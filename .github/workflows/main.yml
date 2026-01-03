@@ -1,4 +1,4 @@
-Name: Live Stream From GitHub Link
+name: Live Stream From GitHub Link
 on:
   workflow_dispatch:
 
