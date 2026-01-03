@@ -1,5 +1,4 @@
-name: 6 Hours Live Loop Stream
-
+Name: Live Stream From Drive
 on:
   workflow_dispatch:
 
@@ -8,11 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg curl
 
-      - name: Start 6 Hour Loop Stream
+      - name: Stream with Bypass
         run: |
-          ffmpeg -re -stream_loop -1 -t 21600 -i "https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260101_720p_30f_20260102_013624.mp4" \
-          -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
-          -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -ar 44100 \
+          # Is line se hum Google Drive ka direct download link nikaalte hain
+          FILE_ID="1_dUtewEfnUkFg593N86N4yayCoYbzZIk"
+          CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p')
+          DIRECT_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260102_720p_30f_20260103_055801.mp4}"
+          
+          # Ab FFmpeg is direct link ko stream karega
+          ffmpeg -re -i "$DIRECT_URL" \
+          -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
+          -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k \
           -f flv "rtmp://a.rtmp.youtube.com/live2/7vfm-s247-54dt-pfc9-96zb"
