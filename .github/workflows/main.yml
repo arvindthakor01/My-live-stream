@@ -12,7 +12,7 @@ jobs:
       - name: Stream to YouTube
         run: |
           # Aapka video link
-          VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260102_720p_30f_20260103_055801.mp4"
+          VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/untagged-5a123363e9d371de0e77/km_20260104_720p_30f_20260104_134340.mp4"
           
           # Nayi Stream Key ke saath FFmpeg command
           ffmpeg -re -stream_loop -1 -i "$VIDEO_URL" \
