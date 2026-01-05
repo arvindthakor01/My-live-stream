@@ -1,4 +1,5 @@
 name: Live Stream From GitHub Link
+
 on:
   workflow_dispatch:
 
@@ -12,10 +13,10 @@ jobs:
       - name: Stream to YouTube
         run: |
           # Naya video link jo aapne diya hai
-          VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260104_720p_30f_20260104_134340.mp4"
+          VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260105_720p_30f_20260105_080405.mp4"
           
-          # FFmpeg command: Isme video loop par chalega
+          # FFmpeg command: Isme video loop (-1) par chalta rahega
           ffmpeg -re -stream_loop -1 -i "$VIDEO_URL" \
-          -c:v libx264 -preset veryfast -b:v 2500k -maxrate 2500k -bufsize 5000k \
+          -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
           -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -ar 44100 \
           -f flv "rtmp://a.rtmp.youtube.com/live2/R4q6-qczk-kjrp-aw7u-bjfr"
