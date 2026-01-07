@@ -19,4 +19,4 @@ jobs:
           ffmpeg -re -stream_loop -1 -i "$VIDEO_URL" \
           -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
           -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -ar 44100 \
-          -f flv "rtmp://a.rtmp.youtube.com/live2/R4q6-qczk-kjrp-aw7u-bjfr"
+          -f flv "rtmp://a.rtmp.youtube.com/live2/z2vw-19w1-uq8z-zs2f-5j0y"
