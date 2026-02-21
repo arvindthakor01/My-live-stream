@@ -16,7 +16,7 @@ jobs:
           VIDEO_URL="https://github.com/arvindthakor01/My-live-stream/releases/download/v1/km_20260220-1_720p_30f_20260221_064634.mp4"
           
           # Aapki stream key
-          STREAM_KEY="r4q6-qczk-kjrp-aw7u-bjfr"
+          STREAM_KEY="r4q6-qczk-kjrp-aw7u-bhajsj"
           
           # FFmpeg command: Reconnection options ke saath taaki stream stable rahe
           ffmpeg -re -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 2 \
